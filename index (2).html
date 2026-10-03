@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AFGOOYE PODCAST</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f2f5fb;--card:#fff;--ink:#0a1a3a;--mute:#5d6b8a;--line:#dbe2f0;--acc:#0a2463;--acc2:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#070e22;--card:#0e1a3a;--ink:#eaf0ff;--mute:#8fa0c8;--line:#1c2d5a;--acc:#6c9bff;--acc2:#070e22}}
+:root[data-theme="dark"]{--bg:#070e22;--card:#0e1a3a;--ink:#eaf0ff;--mute:#8fa0c8;--line:#1c2d5a;--acc:#6c9bff;--acc2:#070e22}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:20px 16px 120px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+h1{font-size:24px;margin:0;letter-spacing:-.02em}h1 span{color:var(--acc)}
+.sub{color:var(--mute);font-size:14px;margin:2px 0 0}
+button,input,select,textarea{font:inherit;color:inherit}
+.btn{background:var(--acc);color:var(--acc2);border:0;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:6px 10px;font-size:13px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:20px}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--mute);cursor:pointer}
+.drop.on{border-color:var(--acc);color:var(--acc)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px}
+textarea{resize:vertical;min-height:60px;margin-top:10px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.bar input{flex:1;min-width:160px}.bar select{width:auto}
+.tabs{display:flex;gap:6px}
+.tab{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:14px}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.ep{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#0a2463,#1e4db7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:34px;cursor:pointer;position:relative}
+.badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);font-size:11px;padding:2px 8px;border-radius:999px;letter-spacing:.04em}
+.ep .b{padding:12px;display:flex;flex-direction:column;gap:4px;flex:1}
+.ep h3{margin:0;font-size:15px;line-height:1.3}
+.meta{font-size:12px;color:var(--mute)}
+.ep p{margin:0;font-size:13px;color:var(--mute);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ep.done{border-color:#2f9e44}.ep.done .thumb{opacity:.6}.chk{position:absolute;top:8px;right:8px;background:#2f9e44;color:#fff;font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.empty{text-align:center;color:var(--mute);padding:50px 10px}
+.player{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:none;z-index:5}
+.player.on{display:block}
+.pin{max-width:1000px;margin:0 auto}
+.pt{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;font-weight:600;font-size:14px}
+video{width:100%;max-height:42vh;background:#000;border-radius:10px;display:none;margin-bottom:6px}
+audio{width:100%}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+.ov.on{display:flex}
+.dlg{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;max-width:340px;width:100%}
+.dlg p{margin:0 0 16px;font-weight:600}
+.dlg .a{display:flex;gap:8px;justify-content:flex-end}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;display:none;z-index:30;max-width:90%}
+.toast.on{display:block}
+.rc{display:flex;gap:6px;align-items:flex-end;margin-top:14px}
+.col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bars{display:flex;gap:3px;align-items:flex-end;height:110px;width:100%;justify-content:center}
+.bw,.ba{width:40%;max-width:20px;border-radius:4px 4px 0 0;min-height:2px}
+.bw{background:#2f9e44}.ba{background:var(--acc)}
+.lb{font-size:11px;color:var(--mute);text-align:center;line-height:1.2}
+.lg{display:flex;gap:14px;font-size:12px;color:var(--mute);margin-top:10px}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.rs{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}.rs b{font-size:22px;display:block}.rs span{font-size:12px;color:var(--mute)}
+.sec{grid-column:1/-1;margin:16px 0 0;font-size:17px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.note{font-size:12px;color:var(--mute);margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>AFGOOYE <span>PODCAST</span></h1><p class="sub">Store, organize and play your audio &amp; video episodes</p></div>
+    <div style="display:flex;gap:8px"><button class="btn ghost" id="themeBtn" title="Switch theme">🌙 Dark</button><button class="btn" id="addBtn">+ Add Episode</button></div>
+  </header>
+
+  <div class="panel" id="upl" style="display:none">
+    <div class="drop" id="drop">Drag &amp; drop an audio or video file here, or click to choose
+      <input type="file" id="file" accept="audio/*,video/*" hidden></div>
+    <input id="yt" placeholder="…or paste a YouTube link (https://youtube.com/…)" style="margin-top:10px">
+    <div class="row">
+      <input id="title" placeholder="Episode title">
+      <select id="cat"><option>Forex Podcast</option><option>Wacdi (Sermons)</option><option>Economy</option><option>TET Community Lessons</option><option>Politics</option><option>Technology</option></select>
+    </div>
+    <select id="sub" style="display:none;margin-top:10px"><option>Basic</option><option>Advanced</option><option>Weekly Recaps</option><option>Risk Management</option></select>
+    <textarea id="desc" placeholder="Short description (optional)"></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn" id="save">Save</button>
+      <button class="btn ghost" id="cancel">Cancel</button>
+      <span class="meta" id="fname" style="align-self:center"></span>
+    </div>
+  </div>
+
+  <div class="bar">
+    <input id="q" placeholder="Search episodes...">
+    <select id="fc"><option value="">All categories</option></select>
+    <select id="fw"><option value="">All status</option><option value="n">Unwatched</option><option value="y">Watched</option></select>
+    <div class="tabs"><button class="tab on" data-t="">All</button><button class="tab" data-t="audio">Audio</button><button class="tab" data-t="video">Video</button></div>
+  </div>
+
+  <div class="tabs" id="subtabs" style="display:none;flex-wrap:wrap;margin-bottom:16px"></div>
+  <div class="grid" id="grid"></div>
+  <p class="note" id="wstat"></p>
+  <p class="note" id="stat"></p>
+  <div class="panel" id="rec" style="margin-top:24px">
+    <h2 style="margin:0 0 10px;font-size:18px">My Record</h2>
+    <div class="tabs" id="rtabs"><button class="tab on" data-r="d">Daily Record</button><button class="tab" data-r="w">Weekly Record</button><button class="tab" data-r="m">Monthly Record</button></div>
+    <div class="rs" id="rsum"></div>
+    <div class="rc" id="rchart"></div>
+    <div class="lg"><span><i style="background:#2f9e44"></i>Lessons watched</span><span><i style="background:var(--acc)"></i>Episodes added</span></div>
+  </div>
+</div>
+
+<div class="ov" id="ov"><div class="dlg"><p id="ovm"></p><div class="a"><button class="btn ghost" id="ovn">Cancel</button><button class="btn" id="ovy">Delete</button></div></div></div>
+<div class="toast" id="toast"></div>
+<div class="player" id="pl"><div class="pin">
+  <div class="pt"><span id="pname"></span><button class="btn ghost sm" id="pclose">Close</button></div>
+  <video id="vid" controls playsinline></video>
+  <audio id="aud" controls></audio>
+</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+let tt=null;
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3000)}
+function ask(m){return new Promise(res=>{$('ovm').textContent=m;$('ov').classList.add('on');
+  const done=v=>{$('ov').classList.remove('on');$('ovy').onclick=$('ovn').onclick=null;res(v)};
+  $('ovy').onclick=()=>done(true);$('ovn').onclick=()=>done(false)})}
+const SEED=[
+{id:'seed-1',seed:1,kind:'youtube',cat:'TET Community Lessons',sub:'Basic',title:'Somali Forex Basics: Beginner Guide for Tet Community',desc:'Beginner forex guide in Somali, part of the TET Community free 2026 mentorship.',url:'https://www.youtube.com/watch?v=JcrfDQyKdkI',size:0,date:0},
+{id:'seed-2',seed:1,kind:'youtube',cat:'TET Community Lessons',title:'TET COMMUNITY – Official YouTube Channel',desc:'All TET Community lessons and mentorship videos.',url:'https://www.youtube.com/@TETCOMMUNITY',size:0,date:0}];
+const SUBS=['Basic','Advanced','Weekly Recaps','Risk Management'];
+const TET='TET Community Lessons';
+let subf='',rec='d',WD=[];
+function bs(t,m){const d=new Date(t);d.setHours(0,0,0,0);if(m==='w')d.setDate(d.getDate()-((d.getDay()+6)%7));if(m==='m')d.setDate(1);return d.getTime()}
+function renderRec(){
+  const n={d:7,w:8,m:6}[rec];let cur=new Date(bs(Date.now(),rec)),st=[];
+  for(let k=0;k<n;k++){st.unshift(cur.getTime());const c=new Date(cur);if(rec==='d')c.setDate(c.getDate()-1);else if(rec==='w')c.setDate(c.getDate()-7);else c.setMonth(c.getMonth()-1);cur=c}
+  const cw={},ca={};
+  WD.forEach(t=>{const k=bs(t,rec);cw[k]=(cw[k]||0)+1});
+  items.filter(i=>!i.seed).forEach(i=>{const k=bs(i.date,rec);ca[k]=(ca[k]||0)+1});
+  const mx=Math.max(1,...st.map(k=>Math.max(cw[k]||0,ca[k]||0)));
+  const lab=k=>{const d=new Date(k);return rec==='m'?d.toLocaleDateString('en-GB',{month:'short'}):rec==='w'?d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}):d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric'})};
+  const last=st[st.length-1],per={d:'Today',w:'This week',m:'This month'}[rec];
+  const tw=Object.values(cw).reduce((a,b)=>a+b,0),ta=Object.values(ca).reduce((a,b)=>a+b,0);
+  $('rsum').innerHTML=`<div><b>${cw[last]||0}</b><span>${per} watched</span></div><div><b>${ca[last]||0}</b><span>${per} added</span></div><div><b>${tw}</b><span>Total watched</span></div><div><b>${ta}</b><span>Total added</span></div>`;
+  $('rchart').innerHTML=st.map(k=>`<div class="col"><div class="bars"><div class="bw" style="height:${(cw[k]||0)/mx*100}%" title="Watched: ${cw[k]||0}"></div><div class="ba" style="height:${(ca[k]||0)/mx*100}%" title="Added: ${ca[k]||0}"></div></div><div class="lb">${lab(k)}<br>${cw[k]||0} · ${ca[k]||0}</div></div>`).join('');
+}
+const CATS=['Forex Podcast','Wacdi (Sermons)','Economy','TET Community Lessons','Politics','Technology'];
+let db=null,items=[],tab='',pending=null,curUrl=null,mem=false;
+
+function open(){return new Promise((res)=>{
+  try{const r=indexedDB.open('podvault',1);
+  r.onupgradeneeded=()=>r.result.createObjectStore('eps',{keyPath:'id'});
+  r.onsuccess=()=>res(r.result);r.onerror=()=>res(null);}catch(e){res(null)}
+});}
+function tx(m){return db.transaction('eps',m).objectStore('eps')}
+function all(){return new Promise(res=>{if(!db)return res(items);try{const q=tx('readonly').getAll();q.onsuccess=()=>res(q.result);q.onerror=()=>res([])}catch(e){res([])}})}
+function put(o){return new Promise(res=>{if(!db){items.push(o);return res(true)}try{const q=tx('readwrite').put(o);q.onsuccess=()=>res(true);q.onerror=()=>res(false)}catch(e){res(false)}})}
+function del(id){return new Promise(res=>{if(!db){items=items.filter(i=>i.id!==id);return res()}try{const q=tx('readwrite').delete(id);q.onsuccess=q.onerror=()=>res()}catch(e){res()}})}
+
+const sz=b=>b>1e6?(b/1e6).toFixed(1)+' MB':Math.max(1,Math.round(b/1e3))+' KB';
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function load(){const raw=await all();WD=raw.filter(i=>i.w&&i.date>0).map(i=>i.date);const ws=new Map(raw.filter(i=>i.w).map(i=>[i.w,i.date]));const tombs=new Set(raw.filter(i=>i.tomb).map(i=>i.tomb));items=raw.filter(i=>!i.seed&&!i.tomb&&!i.w).concat(SEED.filter(i=>!tombs.has(i.id)));items.forEach(i=>i.watched=ws.has(i.id));items.sort((a,b)=>(b.seed?1:0)-(a.seed?1:0)||b.date-a.date);render();renderRec()}
+function render(){
+  const tet=$('fc').value===TET;
+  $('subtabs').style.display=tet?'flex':'none';
+  if(tet)$('subtabs').innerHTML=['All',...SUBS].map(x=>`<button class="tab${(x==='All'?'':x)===subf?' on':''}" data-s="${x==='All'?'':x}">${x}</button>`).join('');
+  else subf='';
+  const st=items.filter(i=>i.kind!=='youtube');
+  $('wstat').textContent=items.length?`✅ ${items.filter(i=>i.watched).length} of ${items.length} watched`:'';
+  const q=$('q').value.toLowerCase(),c=$('fc').value;
+  const cats=CATS;
+  const cur=$('fc').value;
+  $('fc').innerHTML='<option value="">All categories</option>'+cats.map(x=>`<option${x===cur?' selected':''}>${esc(x)}</option>`).join('');
+  const list=items.filter(i=>(!tab||i.kind===tab||(tab==='video'&&i.kind==='youtube'))&&(!c||i.cat===c)&&(!subf||i.sub===subf)&&(!$('fw').value||($('fw').value==='y')===!!i.watched)&&i.title.toLowerCase().includes(q));
+  const card=i=>`<div class="ep${i.watched?' done':''}">
+    ${i.kind==='youtube'?`<a class="thumb" href="${esc(i.url)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">`:`<div class="thumb" data-p="${i.id}">`}${i.kind==='youtube'?'▶️':i.kind==='video'?'🎬':'🎙️'}<span class="badge">${i.kind==='youtube'?'YOUTUBE':i.kind==='video'?'VIDEO':'AUDIO'}</span>${i.watched?'<span class="chk">✓ Watched</span>':''}${i.kind==='youtube'?'</a>':'</div>'}
+    <div class="b"><h3>${esc(i.title)}</h3><div class="meta">${esc(i.cat)}${i.sub?' · '+esc(i.sub):''}${i.kind==='youtube'?'':' · '+sz(i.size)+' · '+new Date(i.date).toLocaleDateString('en-GB')}</div>
+    <p>${esc(i.desc||'')}</p>
+    <div class="acts">${i.kind==='youtube'?`<a class="btn sm" href="${esc(i.url)}" target="_blank" rel="noopener noreferrer" style="text-decoration:none">▶ Watch on YouTube</a><button class="btn ghost sm" data-c="${i.id}">Copy link</button>`:`<button class="btn sm" data-p="${i.id}">▶ Play</button>`}<button class="btn ghost sm" data-w="${i.id}">${i.watched?'✅ Watched':'☐ Mark watched'}</button><button class="btn ghost sm" data-d="${i.id}">Delete</button></div></div></div>`;
+  const empty=`<div class="empty" style="grid-column:1/-1">${items.length?'No episodes found.':'No episodes yet. Tap “+ Add Episode” to get started.'}</div>`;
+  if(tet&&!subf){
+    const full=!q&&!$('fw').value&&!tab;
+    $('grid').innerHTML=['',...SUBS].map(sb=>{
+      const g=list.filter(i=>sb?i.sub===sb:!i.sub);
+      if(!g.length&&(!sb||!full))return '';
+      return `<h2 class="sec">${sb||'General'} <span class="meta">(${g.length})</span></h2>`+(g.length?g.map(card).join(''):`<div class="meta" style="grid-column:1/-1">No lessons yet. Tap “+ Add Episode” and choose ${sb}.</div>`);
+    }).join('')||empty;
+  }else $('grid').innerHTML=list.length?list.map(card).join(''):empty;
+  $('stat').textContent=st.length?`${st.length} episode${st.length>1?'s':''} · ${sz(st.reduce((s,i)=>s+i.size,0))} stored${mem?' (persistent storage unavailable – temporary only)':' on this device'}`:'';
+}
+function play(id){
+  const it=items.find(i=>i.id===id);if(!it)return;if(it.kind==='youtube'){window.open(it.url,'_blank','noopener');return}stop();
+  curUrl=URL.createObjectURL(it.blob);
+  const v=it.kind==='video';const m=v?$('vid'):$('aud');
+  $('vid').style.display=v?'block':'none';$('aud').style.display=v?'none':'block';
+  m.src=curUrl;m.play().catch(()=>{});$('pname').textContent=it.title;$('pl').classList.add('on');
+}
+function stop(){['vid','aud'].forEach(k=>{const m=$(k);m.pause();m.removeAttribute('src');m.load()});if(curUrl)URL.revokeObjectURL(curUrl);curUrl=null;$('pl').classList.remove('on')}
+function pick(f){if(!f)return;if(!/^(audio|video)\//.test(f.type)){toast('Please choose an audio or video file.');return}
+  pending=f;$('fname').textContent=f.name+' ('+sz(f.size)+')';if(!$('title').value)$('title').value=f.name.replace(/\.[^.]+$/,'')}
+function closeUp(){$('upl').style.display='none';pending=null;$('yt').value='';$('file').value='';$('title').value='';$('desc').value='';$('fname').textContent=''}
+
+$('addBtn').onclick=()=>{$('upl').style.display=$('upl').style.display==='none'?'block':'none'};
+$('cancel').onclick=closeUp;
+$('drop').onclick=()=>$('file').click();
+$('file').onchange=e=>pick(e.target.files[0]);
+$('drop').ondragover=e=>{e.preventDefault();$('drop').classList.add('on')};
+$('drop').ondragleave=()=>$('drop').classList.remove('on');
+$('drop').ondrop=e=>{e.preventDefault();$('drop').classList.remove('on');pick(e.dataTransfer.files[0])};
+$('save').onclick=async()=>{
+  const yu=$('yt').value.trim();
+  if(!pending&&yu){
+    if(!/^https?:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(yu)){toast('Please paste a valid YouTube link.');return}
+    const t0=$('title').value.trim();if(!t0){toast('Please enter a title.');return}
+    const o0={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:t0,desc:$('desc').value.trim(),cat:$('cat').value,sub:$('cat').value===TET?$('sub').value:'',kind:'youtube',url:yu,size:0,date:Date.now()};
+    if(!(await put(o0))){toast('Saving failed.');return}
+    closeUp();load();return}
+  if(!pending){toast('Please choose a file or paste a YouTube link.');return}
+  const t=$('title').value.trim();if(!t){toast('Please enter a title.');return}
+  const o={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:t,desc:$('desc').value.trim(),cat:$('cat').value,sub:$('cat').value===TET?$('sub').value:'',
+    kind:pending.type.startsWith('video')?'video':'audio',size:pending.size,date:Date.now(),blob:pending};
+  const ok=await put(o);if(!ok){toast('Saving failed (not enough storage?).');return}
+  closeUp();load();
+};
+$('grid').onclick=async e=>{
+  const p=e.target.closest('[data-p]'),d=e.target.closest('[data-d]'),w=e.target.closest('[data-w]'),cc=e.target.closest('[data-c]');
+  if(cc){const it=items.find(i=>i.id===cc.dataset.c);if(it){try{await navigator.clipboard.writeText(it.url);toast('Link copied – paste it in your browser')}catch(x){toast(it.url)}}return}
+  if(w){const id=w.dataset.w;(items.find(i=>i.id===id)?.watched?del('w-'+id):put({id:'w-'+id,w:id,date:Date.now()})).then(load);return}
+  if(p)play(p.dataset.p);
+  if(d&&await ask('Delete this episode?')){if(curUrl)stop();(d.dataset.d.startsWith('seed-')?put({id:'del-'+d.dataset.d,tomb:d.dataset.d,date:0}):del(d.dataset.d).then(()=>del('w-'+d.dataset.d))).then(load)}
+};
+$('pclose').onclick=stop;
+$('vid').onerror=$('aud').onerror=()=>{if(curUrl)toast('This file could not be played here. Try MP3 or MP4.')};
+$('q').oninput=render;$('rtabs').onclick=e=>{const b=e.target.closest('[data-r]');if(b){rec=b.dataset.r;document.querySelectorAll('#rtabs .tab').forEach(x=>x.classList.toggle('on',x===b));renderRec()}};$('fw').onchange=render;$('fc').onchange=()=>{subf='';render()};
+$('subtabs').onclick=e=>{const b=e.target.closest('[data-s]');if(b){subf=b.dataset.s;render()}};
+$('cat').onchange=()=>{$('sub').style.display=$('cat').value===TET?'block':'none'};
+document.querySelectorAll('.bar .tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.bar .tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');tab=b.dataset.t;render()});
+function eff(){const t=document.documentElement.dataset.theme;return t||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}
+function paint(){$('themeBtn').textContent=eff()==='dark'?'☀️ Light':'🌙 Dark'}
+try{const t=localStorage.getItem('afg-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
+$('themeBtn').onclick=()=>{const n=eff()==='dark'?'light':'dark';document.documentElement.dataset.theme=n;try{localStorage.setItem('afg-theme',n)}catch(e){}paint()};
+paint();
+open().then(d=>{db=d;mem=!d;load()});
+</script>
+</body>
+</html>
